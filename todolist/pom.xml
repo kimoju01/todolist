@@ -7,10 +7,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>todolist Maven Webapp</name>
   <url>http://maven.apache.org</url>
-	<properties>
+  <properties>
 		<!-- web.xml 파일을 삭제해도 eclipse에서 오류가 발생하지 않는다. -->
 		<failOnMissingWebXml>false</failOnMissingWebXml>
-	</properties>
+  </properties>
 	<dependencies>
 		<dependency>
 			<groupId>mysql</groupId>

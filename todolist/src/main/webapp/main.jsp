@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <style>
+ 	<style>
         html, body {
             margin: 0;
             height: 100%;
@@ -92,24 +92,19 @@
             font-size: 1em;
             margin-right: 50px;
             margin-bottom: 3px;
-            padding: 0px 0px 8px 8px;
+            padding: 5px 0px 10px 8px;
             /* background-color: cadetblue; */
         }
 
-        .main .done-list .view {
-            padding-top: 8px;
-        }
-
         .main li label {
-            display: inline-block;
+            display: inline;
+            word-break: break-all;
         }
 
         .main li .star {
-            display: inline-block;
-            width: 20px;
-            height: 10px;
+            line-height: 18px;
             margin-left: -10px;
-            margin-right: 3px;
+            margin-right: -8px;
             font-size: 1.4em;
             border: 0;
             transition: color 0.2s ease-out;
@@ -135,7 +130,7 @@
             /* width: 15px; */
             /* height: 15px; */
             margin-right: 10px;
-            margin-top: 1px;
+            margin-top: -7px;
             color: rgb(195,214,155);
             font-size: 1.5em;
             transition: color 0.2s ease-out;
@@ -199,7 +194,7 @@
                             <div class="view">
                                 <button class="star"></button>
                                 <input class="toggle" type="checkbox">
-                                <label>doing</label>
+                                <label>doingfawefawfwafeawfwafafeawfeawffaefsefasfesfeas</label>
                                 <button class="destroy"></button>
                             </div>    
                         </li>
