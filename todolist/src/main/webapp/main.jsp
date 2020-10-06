@@ -1,12 +1,17 @@
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <title>TODO</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
+<script>
+
+</script>
 </head>
 <body>
     <div class="container">
@@ -19,47 +24,34 @@
                 <div class="doing">
                     <p>DOING</p>
                     <ul class="doing-list">
-                        <li>
-                            <div class="view">
-                                <button class="star"></button>
-                                <input class="toggle" type="checkbox">
-                                <label>doingfawefawfwafeawfwafafeawfeawffaefsefasfesfeas</label>
-                                <button class="destroy"></button>
-                            </div>    
-                        </li>
+                    <c:forEach var="todo" items="${list }">
+			  				<c:if test="${todo.type == 'DOING'}">
+		                        <li>
+		                            <div class="view">
+		                            	<button class="star" onclick="starButtonClick(${todo.id }, this)"></button>
+		                                <input class="toggle" type="checkbox">
+		                                <label>${todo.title }</label>
+		                                <button class="destroy" onclick="destroyButtonClick(${todo.id }, this)"></button>
+		                            </div>    
+		                        </li>
+		                	</c:if> 
+	                    </c:forEach>
                     </ul>
                 </div>
                 <div class="done">
                     <p>DONE</p>
                     <ul class="done-list">
-                        <li>
-                            <div class="view">
-                                <input class="toggle" type="checkbox" checked>
-                                <label>done</label>
-                                <button class="destroy"></button>
-                            </div>    
-                        </li>
-                        <li>
-                            <div class="view">
-                                <input class="toggle" type="checkbox" checked>
-                                <label>done</label>
-                                <button class="destroy"></button>
-                            </div>    
-                        </li>
-                        <li>
-                            <div class="view">
-                                <input class="toggle" type="checkbox" checked>
-                                <label>done</label>
-                                <button class="destroy"></button>
-                            </div>    
-                        </li>
-                        <li>
-                            <div class="view">
-                                <input class="toggle" type="checkbox" checked>
-                                <label>done</label>
-                                <button class="destroy"></button>
-                            </div>    
-                        </li>
+                        <c:forEach var="todo" items="${list }">
+			  				<c:if test="${todo.type == 'DONE'}">
+		                        <li>
+		                            <div class="view">
+		                                <input class="toggle" type="checkbox" checked>
+		                                <label>${todo.title }</label>
+		                                <button class="destroy"></button>
+		                            </div>    
+		                        </li>
+		                	</c:if> 
+	                    </c:forEach>
                     </ul>
                 </div>
             </section>
