@@ -16,7 +16,6 @@ public class TodoDto {
 		this.sequence = sequence;
 		this.type = type;
 	}
-
 	
 	public Long getId() {
 		return id;

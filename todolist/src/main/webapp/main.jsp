@@ -9,9 +9,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
-<script>
-
-</script>
 </head>
 <body>
     <div class="container">
@@ -28,10 +25,10 @@
 			  				<c:if test="${todo.type == 'DOING'}">
 		                        <li>
 		                            <div class="view">
-		                            	<button class="star" onclick="starButtonClick(${todo.id }, this)"></button>
+		                            	<button class="star"></button>
 		                                <input class="toggle" type="checkbox">
 		                                <label>${todo.title }</label>
-		                                <button class="destroy" onclick="destroyButtonClick(${todo.id }, this)"></button>
+		                                <button class="destroy"></button>
 		                            </div>    
 		                        </li>
 		                	</c:if> 
@@ -60,5 +57,7 @@
             kimoju03@naver.com
         </footer>
     </div>
+    
+<script src="js/script.js"></script>
 </body>
 </html>

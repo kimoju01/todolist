@@ -38,6 +38,7 @@ public class TodoDao {
 				String title = rs.getString("title");
 				int sequence = rs.getInt("sequence");
 				String type = rs.getString("type");
+				
 				todoDto = new TodoDto(id, title, sequence, type);
 			}
 		} catch (Exception e) {
@@ -78,15 +79,12 @@ public class TodoDao {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			
 			conn = DriverManager.getConnection(dburl, dbuser, dbpasswd);
 			
 			String sql = "INSERT INTO todo (title) VALUES (?)";
-			
 			ps = conn.prepareStatement(sql);
-			
 			ps.setString(1, todoDto.getTitle());
-			
+	
 			insertCount = ps.executeUpdate();
 			
 		} catch (Exception e) {
@@ -106,6 +104,45 @@ public class TodoDao {
 		}	//finally
 		
 		return insertCount;
+	}
+	
+	public int deleteTodo(Integer todoId) {
+		int deleteCount = 0;
+		
+		Connection conn = null;			
+		PreparedStatement ps = null;	
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			conn = DriverManager.getConnection(dburl, dbuser, dbpasswd);
+			
+			String sql = "DELETE FROM todo WHERE id = ?";
+			
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, todoId);
+			
+			deleteCount = ps.executeUpdate();
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {}
+			} //if
+			
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (Exception ex) {}
+			} //if
+		} //finally
+
+		
+		return deleteCount;
 	}
 	
 	
