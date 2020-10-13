@@ -16,8 +16,11 @@ function addNewItem(itemText) {
     var div = document.createElement('div');
     div.setAttribute('class', 'view');
 
-    var star = document.createElement('button');
+    var star = document.createElement('input');
     star.setAttribute('class', 'star');
+    star.setAttribute('type', 'button');
+    star.setAttribute('value', '★');
+    // star.setAttribute('checked', 'false');
 
     var input = document.createElement('input');
     input.setAttribute('class', 'toggle');
@@ -53,18 +56,29 @@ function toggleItem(e) {
             e.target.previousSibling.remove();
             doneList.appendChild(e.target.parentElement.parentElement);
             e.target.outerHTML = '<input class="toggle" type="checkbox" checked></input>';
-           } else if(e.target.parentElement.parentElement.parentElement == doneList)
+           } else if(e.target.parentElement.parentElement.parentElement == doneList) {
             doingList.appendChild(e.target.parentElement.parentElement);
-            var star = document.createElement('button');
+            var star = document.createElement('input');
             star.setAttribute('class', 'star');
+            star.setAttribute('type', 'button');
+            star.setAttribute('value', '★');
+            // star.setAttribute('checked', 'false');
             e.target.parentElement.insertBefore(star, e.target);
             e.target.outerHTML = '<input class="toggle" type="checkbox"></input>';
         }
     }
+}
 
 function starItem(e) {
     if(e.target && e.target.className == 'star') {
-        
+        if(e.target.checked) {
+            e.target.style.color = "rgb(200, 200, 200)";
+            e.target.checked = false;
+        } else {
+            e.target.style.color = "orange";
+            doingList.insertBefore(e.target.parentElement.parentElement, doingList.firstChild);
+            e.target.checked = true;
+        }
     }
 }
 
