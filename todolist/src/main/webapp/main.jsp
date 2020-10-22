@@ -76,8 +76,7 @@
 	}
 	
 	function destroyButtonClick(id, eventNode) {
-		console.log(id + "/" + eventNode.parentNode.parentNode.name);
-		
+	
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.addEventListener("load", function() {
 			if(this.responseText === "success")
@@ -134,19 +133,7 @@
 		eventNode.parentNode.parentNode.remove();
 	}
 	
-	/*
-	function destroyButtonClick(id, evnetNode) {
-		var httpRequest = new XMLHttpRequest();
-		
-		httpRequest.addEventListener("load", function() {
-			if(this.responseText === "success")
-				remove(eventNode);
-		});
-		
-		httpRequest.open('GET', "/delete?id=" + id);
-		
-	}
-	*/
+	
 	
 	/*
 	function starButtonClick(id, eventNode) {

@@ -33,22 +33,6 @@ public class TodoDeleteServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.print("success");
 		out.close();
-//		
-//		
-//		
-//		dao.deleteTodo(id);
-//		
-//		TodoDao dao = new TodoDao();
-//		
-//		String newtask = request.getParameter("newtask");
-//		
-//		TodoDto dto = new TodoDto();
-//		
-//		dto.setTitle(newtask);
-//		
-//		dao.addTodo(dto);
-//		
-//		response.sendRedirect("/todolist/mainServlet");
 		
 	}
 
