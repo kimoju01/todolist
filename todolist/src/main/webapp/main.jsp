@@ -23,18 +23,29 @@
                 <div class="doing">
                     <p>DOING</p>
                     <ul class="doing-list">
-                    <c:forEach var="todo" items="${list }">
-			  				<c:if test="${todo.type == 'DOING'}">
-		                        <li>
-		                            <div class="view">
-			                            <input class="star" name="starBtn" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)">
-			                            <input class="toggle" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, this)">
-		                                <label>${todo.title }</label>
-		                                <button class="destroy" name="desBtn" onclick="destroyButtonClick(${todo.id}, this)"></button>
-		                            </div>    
-		                        </li>
-		                	</c:if> 
-	                    </c:forEach>
+                    <c:forEach var="sequence" items="${todoSequence }">
+                    	<c:forEach var="todo" items="${list }">
+                    		<c:if test="${todo.sequence == sequence }">
+			  					<c:if test="${todo.type == 'DOING'}">
+		                        	<li>
+		                        		<div class="view">
+		                            		<c:choose>
+		                            		<c:when test="${todo.sequence == '1'}">
+			                            		<input class="star" name="starBtn1" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)" style="color:orange">
+			                            	</c:when>
+			                            	<c:when test="${todo.sequence == '2'}">
+			                            		<input class="star" name="starBtn2" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)">
+			                          	 	</c:when>
+			                            	</c:choose>
+			                            	<input class="toggle" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, ${todo.type }, this)">
+		                                	<label>${todo.title }</label>
+		                                	<button class="destroy" name="desBtn" onclick="destroyButtonClick(${todo.id}, this)"></button>
+		                            	</div>    
+		                        	</li>
+		                		</c:if>
+		                	</c:if>
+		            	</c:forEach> 
+	                </c:forEach>
                     </ul>
                 </div>
                 <div class="done">
@@ -44,7 +55,7 @@
 			  				<c:if test="${todo.type == 'DONE'}">
 		                        <li>
 		                            <div class="view">
-		                                <input class="toggle" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, this)" checked>
+		                                <input class="toggle" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, ${todo.type }, this)" checked>
 		                                <label>${todo.title }</label>
 		                                <button class="destroy" name="desBtn" onclick="destroyButtonClick(${todo.id}, this)"></button>
 		                            </div>    
@@ -62,6 +73,9 @@
     
 <script>
 
+	var doingList = document.querySelector('.doing-list');
+	var doneList = document.querySelector('.done-list');	
+	
 	function check() {
 		var form = document.writetask;
 
@@ -89,74 +103,31 @@
 	
 	
 	function starButtonClick(id, sequence, eventNode) {
-		console.log(id + "/" + sequence);
-	}
-
 	
-	/*	
-	function draw(sequence, eventNode) {
-		var insertItem = eventNode.parentNode.parentNode;
-		
-		if(sequence == 2) {
-			sequence = 1;
-
-			var list = document.querySelector(".doing-list");
-			list.insertBefore(insertItem, list.firstChild);
-		} else if(sequence == 1) {
-			sequence = 2;
-		}
-		
-	}
-	*/
-	
-	/*
-	function starButtonClick(id, eventNode) {
 		var httpRequest = new XMLHttpRequest();
-		var sequence = eventNode.getAttribute("id");
-		
 		httpRequest.addEventListener("load", function() {
-			if(this.responseText === "success")
-				draw(sequence, eventNode);
-		});
+			if(this.responseText === "success") {
+				if(sequence == 1) {		//중요 표시 되어있을 때 클릭하면
+					eventNode.style.color = "rgb(200, 200, 200)";	//중요 표시 해제하고
+					sequence = 2;
+				} else if(sequence == 2) {
+					eventNode.style.color = "orange";
+					sequence = 1;
+					//doingList.insertBefore(eventNode.parentNode.parentNode, doingList.firstChild);
+					}
+				}	//if절 끝
+			});
 		
-		httpRequest.open("GET", "./sequence?id=" + id + "&sequence=" + sequence);
+		httpRequest.open('GET', "./sequence?id=" + id + "&sequence=" + sequence);
 		httpRequest.send();
-	}
-	*/
-	
-	function toggleButtonChange(id, eventNode) {
-		
 		
 	}
-	
-	function remove(eventNode) {
-		eventNode.parentNode.parentNode.remove();
-	}
-	
-	
-	
-	/*
-	function starButtonClick(id, eventNode) {
+
+	function toggleButtonChange(id, type, eventNode) {
 		
-		
-		
-		
-		var star = document.querySelector('.star');
-		var doingList = document.querySelector('.doing-list');
-		
-		if(star.checked) {
-            star.style.color = "rgb(200, 200, 200)";
-            star.checked = false;
-        } else {
-            star.style.color = "orange";
-            doingList.insertBefore(star.parentElement.parentElement, doingList.firstChild);
-            star.checked = true;
-        }
-		
-		window.location = "/todolist/type";
 		
 	}
-	*/
+
 
 </script>
 </body>
