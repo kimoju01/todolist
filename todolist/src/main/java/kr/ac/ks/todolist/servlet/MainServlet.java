@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import kr.ac.ks.todolist.dao.TodoDao;
 import kr.ac.ks.todolist.dto.TodoDto;
 
@@ -25,17 +23,25 @@ public class MainServlet extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	response.setContentType("text/html;charset=utf-8");   
+    	response.setContentType("text/html;");
+    	request.setCharacterEncoding("UTF-8");
     	
         try {
         	TodoDao dao = new TodoDao();
+        	
             List<TodoDto> list = dao.getTodos();
-          
             request.setAttribute("list", list);
+            
+//            String[] todoTypes = { "DOING", "DONE" };
+//            request.setAttribute("todoTypes", todoTypes);
+//            
+            int[] todoSequence = { 1, 2 };
+            request.setAttribute("todoSequence", todoSequence);
             
             // MainServlet에서 생성한 정보를 main.jsp로 forwarding한다.
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp"); 	
         	requestDispatcher.forward(request, response);
+        	
         } catch (Exception e) {
         	e.printStackTrace();
         }
