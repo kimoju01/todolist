@@ -106,7 +106,7 @@ public class TodoDao {
 		return insertCount;
 	}
 	
-	public int deleteTodo(Integer todoId) {
+	public int deleteTodo(Integer id) {
 		int deleteCount = 0;
 		
 		Connection conn = null;			
@@ -121,7 +121,7 @@ public class TodoDao {
 			
 			ps = conn.prepareStatement(sql);
 			
-			ps.setInt(1, todoId);
+			ps.setInt(1, id);
 			
 			deleteCount = ps.executeUpdate();
 			
