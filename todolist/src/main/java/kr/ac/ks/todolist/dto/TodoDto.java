@@ -17,6 +17,9 @@ public class TodoDto {
 		this.type = type;
 	}
 	
+	public TodoDto() {
+	}
+
 	public Long getId() {
 		return id;
 	}
