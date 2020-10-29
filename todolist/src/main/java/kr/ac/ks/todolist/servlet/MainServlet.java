@@ -32,9 +32,9 @@ public class MainServlet extends HttpServlet {
             List<TodoDto> list = dao.getTodos();
             request.setAttribute("list", list);
             
-//            String[] todoTypes = { "DOING", "DONE" };
-//            request.setAttribute("todoTypes", todoTypes);
-//            
+            String[] todoTypes = { "DOING", "DONE" };
+            request.setAttribute("todoTypes", todoTypes);
+
             int[] todoSequence = { 1, 2 };
             request.setAttribute("todoSequence", todoSequence);
             
