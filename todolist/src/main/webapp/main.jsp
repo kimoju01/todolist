@@ -20,50 +20,45 @@
                 </form>
             </header>
             <section class="main">
-                <div class="doing">
-                    <p>DOING</p>
-                    <ul class="doing-list">
-                    <c:forEach var="sequence" items="${todoSequence }">
-                    	<c:forEach var="todo" items="${list }">
-                    		<c:if test="${todo.sequence == sequence }">
-			  					<c:if test="${todo.type == 'DOING'}">
-		                        	<li>
-		                        		<div class="view">
-		                            		<c:choose>
-		                            		<c:when test="${todo.sequence == '1'}">
-			                            		<input class="star" name="starBtn1" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)" style="color:orange">
-			                            	</c:when>
-			                            	<c:when test="${todo.sequence == '2'}">
-			                            		<input class="star" name="starBtn2" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)">
-			                          	 	</c:when>
-			                            	</c:choose>
-			                            	<input class="toggle" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, ${todo.type }, this)">
-		                                	<label>${todo.title }</label>
-		                                	<button class="destroy" name="desBtn" onclick="destroyButtonClick(${todo.id}, this)"></button>
-		                            	</div>    
-		                        	</li>
-		                		</c:if>
-		                	</c:if>
-		            	</c:forEach> 
-	                </c:forEach>
+            <c:forEach var="type" items="${todoTypes }">
+                <div class="${type}">
+                    <p>${type}</p>
+                    <ul class="tasklist">
+	                    <c:forEach var="sequence" items="${todoSequence }">
+	                    	<c:forEach var="todo" items="${list }">
+	                    		<c:if test="${todo.type eq type }">
+	                    			<c:if test="${todo.sequence eq sequence }">
+			                        <li>
+			                       		<div class="view">
+			                       			<c:if test="${type == 'DOING' }">
+			                           			<c:choose>
+			                           			<c:when test="${sequence == '1'}">
+				                           			<input class="star" name="starBtn1" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)" style="color:orange">
+				                           		</c:when>
+				                           		<c:when test="${sequence == '2'}">
+				                           			<input class="star" name="starBtn2" type="button" value="★" onclick="starButtonClick(${todo.id}, ${todo.sequence}, this)">
+				                         	 	</c:when>
+				                           		</c:choose>
+				                           	</c:if>
+				                           	<c:choose>
+			                           		<c:when test="${type == 'DOING'}">
+				                           		<input class="toggle" id="${todo.type }" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, ${todo.type}, this)">
+				                           	</c:when>
+				                           	<c:when test="${type == 'DONE'}">
+				                           		<input class="toggle" id="${todo.type }" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, ${todo.type}, this)" checked>
+				                          	</c:when>
+				                          	</c:choose>
+			                               	<label>${todo.title }</label>
+			                               	<button class="destroy" name="desBtn" onclick="destroyButtonClick(${todo.id}, this)"></button>
+			                           	</div>    
+			                       	</li>
+			                       	</c:if>
+			               		</c:if>
+			            	</c:forEach> 
+		                </c:forEach>
                     </ul>
                 </div>
-                <div class="done">
-                    <p>DONE</p>
-                    <ul class="done-list">
-                        <c:forEach var="todo" items="${list }">
-			  				<c:if test="${todo.type == 'DONE'}">
-		                        <li>
-		                            <div class="view">
-		                                <input class="toggle" name="toggleBtn" type="checkbox" onchange="toggleButtonChange(${todo.id}, ${todo.type }, this)" checked>
-		                                <label>${todo.title }</label>
-		                                <button class="destroy" name="desBtn" onclick="destroyButtonClick(${todo.id}, this)"></button>
-		                            </div>    
-		                        </li>
-		                	</c:if> 
-	                    </c:forEach>
-                    </ul>
-                </div>
+                </c:forEach>
             </section>
         </section>
         <footer class="footer">
@@ -74,7 +69,7 @@
 <script>
 
 	var doingList = document.querySelector('.doing-list');
-	var doneList = document.querySelector('.done-list');	
+	var doneList = document.querySelector('.done-list');
 	
 	function check() {
 		var form = document.writetask;
@@ -113,7 +108,6 @@
 				} else if(sequence == 2) {
 					eventNode.style.color = "orange";
 					sequence = 1;
-					//doingList.insertBefore(eventNode.parentNode.parentNode, doingList.firstChild);
 					}
 				}	//if절 끝
 			});
@@ -123,8 +117,25 @@
 		
 	}
 
-	function toggleButtonChange(id, type, eventNode) {
+	function toggleButtonChange(id, newtype, eventNode) {
 		
+		console.log(eventNode[0]);
+		
+		var httpRequest = new XMLHttpRequest();
+		httpRequest.addEventListener("load", function() {
+			if(this.responseText === "success") {
+				if(eventNode.id == "DOING") {	
+					newtype = "DONE";
+					doneList.appendChild(eventNode.parentNode.parentNode);
+				} else if(eventNode.id == "DONE") {
+					newtype = "DOING";
+					doingList.appendChild(eventNode.parentNode.parentNode);
+					}
+				}
+			});
+		
+		httpRequest.open('GET', "./type?id=" + id + "&type=" + newtype);
+		httpRequest.send();
 		
 	}
 
